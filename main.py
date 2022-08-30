@@ -8,7 +8,8 @@ This is a temporary script file.
 import pandas as pd
 #import tkinter as tk
 import numpy as np
-
+from flask import Flask
+from flask import jsonify
 
 #from datetime import datetime
 from datetime import date
@@ -33,20 +34,20 @@ from reportlab.pdfgen import canvas
 # %% Importar datos
 
 # Movimientos de bodegas
-#url = 'https://drive.google.com/file/d/16v37OIC-km63BuE-4W2eWD5FmPEPx0iI/view?usp=sharing'
-#path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
-#movbod = pd.read_csv(path)
+url = 'https://drive.google.com/file/d/16v37OIC-km63BuE-4W2eWD5FmPEPx0iI/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
+movbod = pd.read_csv(path)
 
-movbod = pd.read_csv('movbod.csv')
+#movbod = pd.read_csv('movbod.csv')
 
 
 
 # Stock total bodegas
-#url = 'https://drive.google.com/file/d/1SrWGcGTxlXqPSxbC8kJOMxjG3oQVXboK/view?usp=sharing'
-#path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
-#stocktotalbodmas = pd.read_csv(path)
+url = 'https://drive.google.com/file/d/1SrWGcGTxlXqPSxbC8kJOMxjG3oQVXboK/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
+stocktotalbodmas = pd.read_csv(path)
 
-stocktotalbodmas = pd.read_csv('stocktotalbodmas.csv')
+#stocktotalbodmas = pd.read_csv('stocktotalbodmas.csv')
 
 # Imagen
 
@@ -297,8 +298,8 @@ mini = movbod['FECHA'].min()
 maxi = movbod['FECHA'].max()
 # %% DASH CONFIGURACIÓN INICIAL
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+app = Flask(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+@app.route('/')
 # styling the sidebar
 SIDEBAR_STYLE = {
     "position": "fixed",
@@ -4207,6 +4208,5 @@ def data(dropdownprio, dropdownmmi, dropdownmcp):
                     
 
 
-
 if __name__ == '__main__':
-    app.run_server(debug=False, port=3004)
+    app.run(host='127.0.0.1', port=8080, debug=True)
